@@ -1,15 +1,21 @@
-var app = require('express')(),
+var express = require('express'),
+    app = express(),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server),
     ent = require('ent'), // Permet de bloquer les caractères HTML (sécurité équivalente à htmlentities en PHP)
     fs = require('fs');
 
+
+app.configure(function(){
+    app.use(express.bodyParser());      // Parses incoming request date.
+    app.use(app.router);                // Mount application routes
+    app.use(express.static(__dirname + '/assets'));
+});
+
 // Chargement de la page index.html
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
-
-app.use("/assets",express.static(__dirname + "/assets"));
 
 io.sockets.on('connection', function (socket, pseudo) {
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
@@ -25,7 +31,7 @@ io.sockets.on('connection', function (socket, pseudo) {
             message = ent.encode(message);
             socket.broadcast.emit('message', {pseudo: pseudo, message: message});
         });
-    }); 
+    });
 });
 
 server.listen(8080);

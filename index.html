@@ -4,6 +4,7 @@
         <meta charset="utf-8" />
         <title>Super Chat temps réel !</title>
         <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/tunisiana.css">
         <style>
             #zone_chat strong {
                 color: white;
@@ -16,7 +17,7 @@
 			-moz-user-select: -moz-none;
 			-o-user-select: none;
 		  }
-		
+
 		  body {
 			background-color: ivory;
 			transition: background-color 1s ease-in-out
@@ -43,7 +44,7 @@
 		  }
         </style>
     </head>
- 
+
     <body>
         <h1>Le super Chat temps réel !</h1>
 
@@ -53,17 +54,17 @@
         </form>
 
         <section id="zone_chat">
-            
+
         </section>
 
 
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script>
-		
-		
-			
-		
+
+
+
+
 
             // Connexion à socket.io
             var socket = io.connect('http://localhost:8080');
@@ -91,7 +92,7 @@
                 $('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
                 return false; // Permet de bloquer l'envoi "classique" du formulaire
             });
-            
+
             // Ajoute un message dans la page
             function insereMessage(pseudo, message) {
                 $('#zone_chat').prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
