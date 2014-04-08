@@ -21,64 +21,93 @@
 <body class="tunisiana bg-tunisiana-s2">
 <div id="tk-content" class="tk-content">
 <div id="frame-1" class="frame frame-1 next-frame" data-frame="1">
-  <!--<ul id="menu-vegaz">
+  <ul id="menu-vegaz">
     <li><a href="/background-1.png" data-valign="top"><img src="/thumbnail-1.jpg"></a></li>
     <li><a href="/background-2.png" data-valign="top"><img src="/thumbnail-2.jpg"></a></li>
     <li><a href="/background-1.png" data-valign="top"><img src="/thumbnail-1.jpg"></a></li>
     <li><a href="/background-2.png" data-valign="top"><img src="/thumbnail-2.jpg"></a></li>
     <li><a href="/background-1.png" id="slideshow"><span id="pause"></span><img id="thumbnail" src="/slideshow.gif"></a></li>
-  </ul>-->
+  </ul>
+</div>
+<div id="frame-2" class="frame frame-2 bg-tunisiana next-frame" data-frame="1">
+
   <div class="frame-header tk-header">
       <div class="logo-ooredoo"></div>
       <div class="logo-tunisiana"></div>
-      
+
     </div>
   <div class="frame-body tk-body">
     <div class="zone_battle zone_1" id="zone_battle_1"></div>
-	<div class="zone_battle zone_2" id="zone_battle_2"></div>
+    <div class="zone_battle zone_2" id="zone_battle_2"></div>
   </div>
   <div class="frame-header footer tk-header">
     <div class="logo-ooredoo"></div>
     <div class="logo-tunisiana"></div>
   </div>
+
 </div>
-<div id="frame-2" class="frame frame-2 bg-tunisiana next-frame" data-frame="1"> 
-  <div class="frame-header tk-header">
-      <div class="logo-ooredoo"></div>
-      <div class="logo-tunisiana"></div>
-      
-    </div>
-  <div class="frame-body tk-body">
-    <div class="table_wrap allheight">
-      <div class="cell_wrap middle">
-        <div class="slogan">
-        	<h1 class="text-s1">Participez à notre Jeu<br>Battle<br>et gagnez plein de cadeaux</h1>
+<div id="frame-3" class="frame frame-3 bg-tunisiana-s2 header-in-top frame-sucess" data-frame="3">
+        <div class="frame-header tk-header">
+          <div class="logo-ooredoo"></div>
+          <div class="logo-tunisiana"></div>
+        </div><div class="frame-body tk-body">
+      <div class="table_wrap allheight">
+        <div class="cell_wrap middle">
+          <div class="container">
+            <div class="container_6">
+              <div class="grid_6">
+                <div class="box">
+
+                    <div class="quizResults" style="display: block;">
+                      <h3 class="quizLevel level4"><span><div class="res" style="background-image:url(/images/iconmonstr-christmas-gift-2-icon.svg)"><span class="txt">Bravo ! <b class="client"></b></span> Vous avez gagné une Recharge de <span class="txt">2 DT.</span></div></span></h3>
+
+                    </div>
+
+   </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="frame-header footer tk-header">
-    <div class="logo-ooredoo"></div>
-    <div class="logo-tunisiana"></div>
-  </div>
-</div>
 
 <section id="zone_chat"> </section>
 </div>
-<script src="/socket.io/socket.io.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery.min.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery-ui-1.9.2.custom.min.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery.ui.touch-punch.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery.placeholder.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery.browser.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery.hoverIntent.js"></script> 
-<script type="text/javascript" src="/plugins/vegas/jquery.vegas.js"></script> 
-<script type="text/javascript" src="/plugins/keyboard/js/keyboard.js"></script> 
-<script type="text/javascript" src="/plugins/slick-quiz/js/slickQuiz-config.js"></script> 
-<script type="text/javascript" src="/plugins/slick-quiz/js/slickQuiz.js"></script> 
-<script type="text/javascript" src="/javascripts/tunisiana/background.js"></script> 
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery.ui.touch-punch.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery.placeholder.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery.browser.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery.hoverIntent.js"></script>
+<script type="text/javascript" src="/plugins/vegas/jquery.vegas.js"></script>
+<script type="text/javascript" src="/plugins/keyboard/js/keyboard.js"></script>
+<script type="text/javascript" src="/plugins/slick-quiz/js/slickQuiz-config.js"></script>
+<script type="text/javascript" src="/plugins/slick-quiz/js/slickQuiz.js"></script>
+<script type="text/javascript" src="/javascripts/tunisiana/background.js"></script>
 
 <script>
+
+            var tunisiana = {
+                version: '1.1.2',
+                date: '2014.jun.06',
+                debug: true,
+                currentFrame: 1,
+                consolelog: {
+                    css: 'background: #FFF; color: #E3001B'
+                },
+                log: function(msg,notcustom) {
+                    if (this.debug && !$.browser.msie){
+                        if(!notcustom)
+                            console.log('%c LOG : ', this.consolelog.css, msg);
+                        else
+                            console.log(msg);
+                    }
+                },
+                host: 'http://172.16.0.58:8080',
+                grid : [50 ,50],
+            };
             // Connexion à socket.io
             var socket = io.connect('http://localhost:8080');
 
@@ -86,13 +115,22 @@
 /*            var pseudo = prompt('Quel est votre pseudo ?');
             socket.emit('nouveau_client', pseudo);
             document.title = pseudo + ' - ' + document.title;*/
-			
-			
+            var client_connected = 0,
+            client_connected_a = 0,
+            client_connected_b = 0,
+            currentFrame = 1;
+
+
 			socket.on('nouveau_client_a', function(data) {
-                insereNouveauClient('.zone_1')
+                insereNouveauClient('.zone_1');
+                client_connected_a = 1;
+                fn_client_connected();
+
             });
 			socket.on('nouveau_client_b', function(data) {
-                insereNouveauClient('.zone_2')
+                insereNouveauClient('.zone_2');
+                client_connected_b = 1;
+                fn_client_connected();
             });
 
             // Quand on reçoit un message, on l'insère dans la page
@@ -110,7 +148,11 @@
 			socket.on('update_pos_b', function(data) {
                 insereHtml(data.pseudo, data.html, '.zone_2')
             });
-			
+
+            socket.on('client_win', function(data) {
+                client_win(data.pseudo, data.client)
+            });
+
             // Ajoute un message dans la page
             function insereNouveauClient(zone) {
                 $(zone).html('');
@@ -121,8 +163,40 @@
 			function insereHtml(pseudo, html, zone) {
                 $(zone).html(html);
             }
-			
+            function client_win(pseudo, client){
+                $('.client').text(pseudo);
+                nextFrame(2);
+            }
+            function fn_client_connected(){
+                client_connected++;
+                if(client_connected_a == 1 && client_connected_b == 1){
+                    client_connected_a = 0;
+                    client_connected_b = 0;
+                    nextFrame();
+                    alert(client_connected_a);
+                    alert(client_connected_a);
+                }
+            }
+            function nextFrame(nbr){
+             $('.vegas-background').hide();
+             tunisiana.log('----------------------------------------------------',true);
+             tunisiana.log('                    NextFrame                       ',true);
+             tunisiana.log('----------------------------------------------------',true);
+             $('#frame-'+currentFrame).css('z-index','90').fadeOut('slow', function(){
+                 $(this).hide();
+             });
+             tunisiana.log('Hide frame'+currentFrame);
+             currentFrame = nbr;
+             $('#frame-'+currentFrame).css('z-index','10').fadeIn('slow', function(){
+                 tunisiana.log('Show frame'+currentFrame);
+             });
+         };
+         $('.quizResults').click(function(){
+            nextFrame(1);
+         });
+
+
         </script>
-        
+
 </body>
 </html>

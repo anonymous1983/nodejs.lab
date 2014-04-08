@@ -329,7 +329,7 @@ function handleCardDrop( event, ui ) {
   // on top of the slot, and prevent it being dragged
   // again
 
-  if ( (slotNumber == cardNumber)||(slotNumber != cardNumber) ) {
+  if ( (slotNumber == cardNumber) ) {
     ui.draggable.addClass( 'correct' );
     ui.draggable.draggable( 'disable' );
     $(this).droppable( 'disable' );
@@ -341,15 +341,9 @@ function handleCardDrop( event, ui ) {
   // If all the cards have been placed correctly then display a message
   // and reset the cards for another go
 
-  if ( correctCards == 10 ) {
-    $('#successMessage').show();
-    $('#successMessage').animate( {
-      left: '380px',
-      top: '200px',
-      width: '400px',
-      height: '100px',
-      opacity: 1
-    } );
+  if ( correctCards == 7 ) {
+        nextFrame();
+        socket.emit('client_b_win'); // Transmet le message aux autres
   }
 
 }

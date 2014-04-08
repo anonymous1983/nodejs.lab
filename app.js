@@ -81,6 +81,23 @@ io.sockets.on('connection', function (socket, pseudo) {
         });
     });
 
+    socket.on('client_a_win', function () {
+        socket.get('pseudo', function (error, pseudo) {
+            //html = ent.encode(html);
+            socket.broadcast.emit('client_win', {pseudo: pseudo, client: 'a'});
+        });
+    });
+
+
+    socket.on('client_b_win', function () {
+        socket.get('pseudo', function (error, pseudo) {
+            //html = ent.encode(html);
+            socket.broadcast.emit('client_win', {pseudo: pseudo, client: 'b'});
+        });
+    });
+
+
+
 
 
 });

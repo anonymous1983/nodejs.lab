@@ -63,17 +63,7 @@ $( function() {
 	$('.next-frame').click(function(){
 
         if($(this).hasClass('btn-submit')){
-            if(validForm()){
-                 $.ajax({
-                   type: "POST",
-                   url: "/DB/new_user.php",
-                   data: $("#signupForm").serialize(),
-                   success: function(msg){
-                     nextFrame();
-                   }
-                 });
-
-         }
+            if(validForm()) nextFrame();
         }else{
             nextFrame();
         }
