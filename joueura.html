@@ -156,6 +156,7 @@
 <script src="/socket.io/socket.io.js"></script> 
 <script type="text/javascript" src="/javascripts/jquery/jquery.min.js"></script> 
 <script type="text/javascript" src="/javascripts/jquery/jquery-ui-1.9.2.custom.min.js"></script> 
+
 <script type="text/javascript" src="/javascripts/jquery/jquery.placeholder.js"></script> 
 <script type="text/javascript" src="/javascripts/jquery/jquery.browser.js"></script> 
 <script type="text/javascript" src="/javascripts/jquery/jquery.hoverIntent.js"></script> 
@@ -175,12 +176,12 @@
             var socket = io.connect('http://localhost:8080');
 
             // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
-            var pseudo = prompt('Quel est votre pseudo ?');
+            var pseudo = "Joueur A";
             socket.emit('nouveau_client', pseudo);
             document.title = pseudo + ' - ' + document.title;
 
             // Quand on reçoit un message, on l'insère dans la page
-            socket.on('message', function(data) {
+            socket.on('message_a', function(data) {
                 insereMessage(data.pseudo, data.message)
             })
 
@@ -192,7 +193,7 @@
             // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
             $('#formulaire_chat').submit(function () {
                 var message = $('#message').val();
-                socket.emit('message', message); // Transmet le message aux autres
+                socket.emit('message_a', message); // Transmet le message aux autres
                 insereMessage(pseudo, message); // Affiche le message aussi sur notre page
                 $('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
                 return false; // Permet de bloquer l'envoi "classique" du formulaire

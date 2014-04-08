@@ -10,11 +10,22 @@ app.configure(function(){
     app.use(express.bodyParser());      // Parses incoming request date.
     app.use(app.router);                // Mount application routes
     app.use(express.static(__dirname + '/assets'));
+	app.use(express.static(__dirname + '/media'));
 });
 
 // Chargement de la page index.html
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
+});
+
+app.get('/master.html', function (req, res) {
+  res.sendfile(__dirname + '/master.html');
+});
+app.get('/joueura.html', function (req, res) {
+  res.sendfile(__dirname + '/joueura.html');
+});
+app.get('/joueurb.html', function (req, res) {
+  res.sendfile(__dirname + '/joueurb.html');
 });
 
 io.sockets.on('connection', function (socket, pseudo) {
@@ -30,6 +41,18 @@ io.sockets.on('connection', function (socket, pseudo) {
         socket.get('pseudo', function (error, pseudo) {
             message = ent.encode(message);
             socket.broadcast.emit('message', {pseudo: pseudo, message: message});
+        });
+    });
+	socket.on('message_a', function (message) {
+        socket.get('pseudo', function (error, pseudo) {
+            message = ent.encode(message);
+            socket.broadcast.emit('message_a', {pseudo: pseudo, message: message});
+        });
+    });
+	socket.on('message_b', function (message) {
+        socket.get('pseudo', function (error, pseudo) {
+            message = ent.encode(message);
+            socket.broadcast.emit('message_b', {pseudo: pseudo, message: message});
         });
     });
 });

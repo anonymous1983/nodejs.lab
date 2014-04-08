@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Participez à notre Jeu Battle et gagnez plein de cadeaux</title>
+<link href="/stylesheets/reset.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/stylesheets/layout.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/stylesheets/font.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/stylesheets/sprites.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/stylesheets/form.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/stylesheets/global.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/plugins/vegas/jquery.vegas.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/plugins/keyboard/css/keyboard.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/plugins/slick-quiz/css/slickQuiz.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/stylesheets/tunisiana.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/stylesheets/style.css" rel="stylesheet" type="text/css" media="all" />
+<script src="/plugins/modernizr/modernizr.custom.js"></script>
+<script src="/plugins/respond/respond.js"></script>
+</head>
+
+<body class="tunisiana bg-tunisiana-s2">
+<div id="tk-content" class="tk-content">
+<div id="frame-1" class="frame frame-1 next-frame" data-frame="1">
+  <!--<ul id="menu-vegaz">
+    <li><a href="/background-1.png" data-valign="top"><img src="/thumbnail-1.jpg"></a></li>
+    <li><a href="/background-2.png" data-valign="top"><img src="/thumbnail-2.jpg"></a></li>
+    <li><a href="/background-1.png" data-valign="top"><img src="/thumbnail-1.jpg"></a></li>
+    <li><a href="/background-2.png" data-valign="top"><img src="/thumbnail-2.jpg"></a></li>
+    <li><a href="/background-1.png" id="slideshow"><span id="pause"></span><img id="thumbnail" src="/slideshow.gif"></a></li>
+  </ul>-->
+  <div class="frame-header tk-header">
+      <div class="logo-ooredoo"></div>
+      <div class="logo-tunisiana"></div>
+      
+    </div>
+  <div class="frame-body tk-body">
+    <div class="zone_battle zone_1" id="zone_battle_1"></div>
+	<div class="zone_battle zone_2" id="zone_battle_2"></div>
+  </div>
+  <div class="frame-header footer tk-header">
+    <div class="logo-ooredoo"></div>
+    <div class="logo-tunisiana"></div>
+  </div>
+</div>
+<div id="frame-2" class="frame frame-2 bg-tunisiana next-frame" data-frame="1"> 
+  <div class="frame-header tk-header">
+      <div class="logo-ooredoo"></div>
+      <div class="logo-tunisiana"></div>
+      
+    </div>
+  <div class="frame-body tk-body">
+    <div class="table_wrap allheight">
+      <div class="cell_wrap middle">
+        <div class="slogan">
+        	<h1 class="text-s1">Participez à notre Jeu<br>Battle<br>et gagnez plein de cadeaux</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-header footer tk-header">
+    <div class="logo-ooredoo"></div>
+    <div class="logo-tunisiana"></div>
+  </div>
+</div>
+
+<section id="zone_chat"> </section>
+</div>
+<script src="/socket.io/socket.io.js"></script> 
+<script type="text/javascript" src="/javascripts/jquery/jquery.min.js"></script> 
+<script type="text/javascript" src="/javascripts/jquery/jquery-ui-1.9.2.custom.min.js"></script> 
+
+<script type="text/javascript" src="/javascripts/jquery/jquery.placeholder.js"></script> 
+<script type="text/javascript" src="/javascripts/jquery/jquery.browser.js"></script> 
+<script type="text/javascript" src="/javascripts/jquery/jquery.hoverIntent.js"></script> 
+<script type="text/javascript" src="/plugins/vegas/jquery.vegas.js"></script> 
+<script type="text/javascript" src="/plugins/keyboard/js/keyboard.js"></script> 
+<script type="text/javascript" src="/plugins/slick-quiz/js/slickQuiz-config.js"></script> 
+<script type="text/javascript" src="/plugins/slick-quiz/js/slickQuiz.js"></script> 
+<script type="text/javascript" src="/javascripts/tunisiana/background.js"></script> 
+
+<script>
+
+
+
+
+
+            // Connexion à socket.io
+            var socket = io.connect('http://localhost:8080');
+
+            // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
+/*            var pseudo = prompt('Quel est votre pseudo ?');
+            socket.emit('nouveau_client', pseudo);
+            document.title = pseudo + ' - ' + document.title;*/
+
+            // Quand on reçoit un message, on l'insère dans la page
+            socket.on('message_a', function(data) {
+                insereMessage(data.pseudo, data.message, '.zone_1')
+            });
+			socket.on('message_b', function(data) {
+                insereMessage(data.pseudo, data.message, '.zone_2')
+            });
+
+            // Ajoute un message dans la page
+            function insereMessage(pseudo, message, zone) {
+                $(zone).prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
+            }
+        </script>
+        
+</body>
+</html>
