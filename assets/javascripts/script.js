@@ -13,28 +13,30 @@ var tunisiana = {
 			else
 				console.log(msg);
 		}
-    }
+    },
+	host: 'http://172.16.0.58:8080',
+	grid : [50 ,50],
 };
-$( function() { 
+$( function() {
 	// Display the right thumbnail instead of the slideshow animated gif when the slideshow is running
 	$( 'body' ).bind( 'vegaswalk', function( e, bg ) {
 	    var src = $( bg ).attr( 'src' ).replace( 'background', 'thumbnail' );
 		$( '#thumbnail' ).attr( 'src', src );
-		
+
 	});
-	
+
 	// Auto Vegaswalk
 	$( '#pause' ).trigger( "click" );
-	
-	
+
+
 	$('.frame-3 .btn-reset').bind('click', function(){
 		$('.frame-3 input').val('');
 	});
-	
+
 	$('.frame-3 input').bind('focus', function(){
 		$(this).initKeyboard();
 	});
-	
+
 	$('#slickQuiz').slickQuiz(
 		{
                 checkAnswerText:  'Suivant',
@@ -56,12 +58,12 @@ $( function() {
 	$('#slickQuiz .quizResults').click(function() {
     	      location.reload();
 	});
-	
-	
+
+
 	$('.next-frame').click(function(){
 		nextFrame();
 	});
- 
+
  });
  nextFrame = function(){
 	 $('.vegas-background').hide();
@@ -77,7 +79,7 @@ $( function() {
 		 tunisiana.log('Show frame'+tunisiana.currentFrame);
 	 });
  };
- 
- 
- 
- 
+
+
+
+

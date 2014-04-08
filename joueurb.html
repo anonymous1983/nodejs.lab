@@ -29,11 +29,11 @@
     <li><a href="/background-1.png" id="slideshow"><span id="pause"></span><img id="thumbnail" src="/slideshow.gif"></a></li>
   </ul>
 </div>
-<div id="frame-2" class="frame frame-2 bg-tunisiana next-frame" data-frame="1"> 
+<div id="frame-2" class="frame frame-2 bg-tunisiana next-frame" data-frame="1">
   <!--<div class="frame-header tk-header">
       <div class="logo-ooredoo"></div>
       <div class="logo-tunisiana"></div>
-      
+
     </div>-->
   <div class="frame-body tk-body">
     <div class="table_wrap allheight">
@@ -188,22 +188,22 @@
 </form>
 <section id="zone_chat"> </section>
 </div>
-<script src="/socket.io/socket.io.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery.min.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery-ui-1.9.2.custom.min.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery.ui.touch-punch.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery.placeholder.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery.browser.js"></script> 
-<script type="text/javascript" src="/javascripts/jquery/jquery.hoverIntent.js"></script> 
-<script type="text/javascript" src="/plugins/vegas/jquery.vegas.js"></script> 
-<script type="text/javascript" src="/plugins/keyboard/js/keyboard.js"></script> 
-<script type="text/javascript" src="/plugins/slick-quiz/js/slickQuiz-config.js"></script> 
-<script type="text/javascript" src="/plugins/slick-quiz/js/slickQuiz.js"></script> 
-<script type="text/javascript" src="/javascripts/tunisiana/background.js"></script> 
-<script type="text/javascript" src="/javascripts/script.js"></script> 
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery.ui.touch-punch.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery.placeholder.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery.browser.js"></script>
+<script type="text/javascript" src="/javascripts/jquery/jquery.hoverIntent.js"></script>
+<script type="text/javascript" src="/plugins/vegas/jquery.vegas.js"></script>
+<script type="text/javascript" src="/plugins/keyboard/js/keyboard.js"></script>
+<script type="text/javascript" src="/plugins/slick-quiz/js/slickQuiz-config.js"></script>
+<script type="text/javascript" src="/plugins/slick-quiz/js/slickQuiz.js"></script>
+<script type="text/javascript" src="/javascripts/tunisiana/background.js"></script>
+<script type="text/javascript" src="/javascripts/script.js"></script>
 <script>
             // Connexion à socket.io
-            var socket = io.connect('http://localhost:8080');
+            var socket = io.connect(tunisiana.host);
 
             // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
             var pseudo = "Joueur B";
@@ -235,12 +235,12 @@
             }
         </script>
         <script>
-        
+
  var correctCards = 0;
 $( init );
- 
+
 function init() {
- 
+
   // Hide the success message
   $('#successMessage').hide();
   $('#successMessage').css( {
@@ -249,12 +249,12 @@ function init() {
     width: 0,
     height: 0
   } );
- 
+
   // Reset the game
   correctCards = 0;
   $('#cardPile').html( '' );
   $('#cardSlots').html( '' );
- 
+
   // Create the pile of shuffled cards
   var numbers = [ 1, 2, 3, 4, 5, 6, 7 ];
   numbers.sort( function() { return Math.random() - .5 } );
@@ -269,6 +269,7 @@ function init() {
       stack: '#cardPile div',
       cursor: 'move',
       revert: true,
+	  grid: tunisiana.grid,
       start: function() {
         $this = $(this);
         updateLog( $elemt_counter, $this );
@@ -283,7 +284,7 @@ function init() {
       }
     } );
   }
- 
+
   // Create the card slots
   var words = [ 'one', 'two', 'three', 'four', 'five', 'six', 'seven' ];
   for ( var i=1; i<=7; i++ ) {
@@ -293,7 +294,7 @@ function init() {
       drop: handleCardDrop
     } );
   }
- 
+
 }
 function updateCounterStatus( $event_counter, new_count ) {
       // first update the status visually...
@@ -304,27 +305,27 @@ function updateCounterStatus( $event_counter, new_count ) {
       // ...then update the numbers
       $( "span.count", $event_counter ).text( new_count );
     }
-    
+
     function updateLog($event_counter, $this){
       $( "span.count", $event_counter ).text( $this.attr('id'));
-      
-      
+
+
     }
     function updateLogPos( $this){
     var position = $this.position();
     $("#event-elemt-position").text( "left: " + position.left +  ", top: "  + position.top );
 	socket.emit('update_pos_b', $('#content').html()); // Transmet le message aux autres
     }
-    
+
 function handleCardDrop( event, ui ) {
   var slotNumber = $(this).data( 'number' );
   var cardNumber = ui.draggable.data( 'number' );
- 
+
   // If the card was dropped to the correct slot,
   // change the card colour, position it directly
   // on top of the slot, and prevent it being dragged
   // again
- 
+
   if ( (slotNumber == cardNumber)||(slotNumber != cardNumber) ) {
     ui.draggable.addClass( 'correct' );
     ui.draggable.draggable( 'disable' );
@@ -332,11 +333,11 @@ function handleCardDrop( event, ui ) {
     ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
     ui.draggable.draggable( 'option', 'revert', false );
     correctCards++;
-  } 
-   
+  }
+
   // If all the cards have been placed correctly then display a message
   // and reset the cards for another go
- 
+
   if ( correctCards == 10 ) {
     $('#successMessage').show();
     $('#successMessage').animate( {
@@ -347,9 +348,9 @@ function handleCardDrop( event, ui ) {
       opacity: 1
     } );
   }
- 
+
 }
 </script>
-        
+
 </body>
 </html>

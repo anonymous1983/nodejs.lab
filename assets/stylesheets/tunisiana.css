@@ -139,7 +139,7 @@ html {
 	height: 130px;
 	width: 28%;
 	overflow: hidden;
-	background-image: url(../images/logo-tunisiana-white.svg);
+	/*background-image: url(../images/logo-tunisiana-white.svg);*/
 	background-repeat: no-repeat;
 	background-position: 100% 0;
 	background-size: auto 100%;
@@ -151,7 +151,7 @@ html {
 	height: 100px;
 	width: 65%;
 	overflow: hidden;
-	background-image: url(../images/logo-ooredoo-95.svg);
+	/*background-image: url(../images/logo-ooredoo-95.svg);*/
 	background-repeat: no-repeat;
 	background-position: 0 0;
 	background-size: auto 100%;
