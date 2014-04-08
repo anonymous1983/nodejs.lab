@@ -61,11 +61,30 @@ $( function() {
 
 
 	$('.next-frame').click(function(){
-		nextFrame();
-	});
 
+        if($(this).hasClass('btn-submit')){
+            if(validForm()){
+                 $.ajax({
+                   type: "POST",
+                   url: "/DB/new_user.php",
+                   data: $("#signupForm").serialize(),
+                   success: function(msg){
+                     nextFrame();
+                   }
+                 });
+
+         }
+        }else{
+            nextFrame();
+        }
+	});
  });
- nextFrame = function(){
+validForm = function(){
+    if($('#input_name').val() != '' && $('#input_lastname').val() != '' && $('#input_phone').val() != '')
+        return true;
+    else false;
+}
+nextFrame = function(){
 	 $('.vegas-background').hide();
 	 tunisiana.log('----------------------------------------------------',true);
 	 tunisiana.log('					NextFrame						',true);
@@ -79,7 +98,3 @@ $( function() {
 		 tunisiana.log('Show frame'+tunisiana.currentFrame);
 	 });
  };
-
-
-
-

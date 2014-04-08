@@ -11,6 +11,7 @@ app.configure(function(){
     app.use(app.router);                // Mount application routes
     app.use(express.static(__dirname + '/assets'));
 	app.use(express.static(__dirname + '/media'));
+    app.use(express.static(__dirname + '/DB'));
 });
 
 // Chargement de la page index.html
@@ -27,6 +28,7 @@ app.get('/joueura.html', function (req, res) {
 app.get('/joueurb.html', function (req, res) {
   res.sendfile(__dirname + '/joueurb.html');
 });
+
 
 io.sockets.on('connection', function (socket, pseudo) {
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
@@ -65,7 +67,7 @@ io.sockets.on('connection', function (socket, pseudo) {
             socket.broadcast.emit('message_b', {pseudo: pseudo, message: message});
         });
     });
-	
+
 	socket.on('update_pos_a', function (html) {
         socket.get('pseudo', function (error, pseudo) {
             //html = ent.encode(html);
@@ -78,9 +80,9 @@ io.sockets.on('connection', function (socket, pseudo) {
             socket.broadcast.emit('update_pos_b', {pseudo: pseudo, html: html});
         });
     });
-	
-	
-	
+
+
+
 });
 
 server.listen(8080);

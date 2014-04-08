@@ -59,26 +59,28 @@
       <div class="cell_wrap middle">
         <h1 class="text-s4 color-c1"> Saisissez les infos et jouez</h1>
         <div class="container">
-          <div class="container_6">
-            <div class="grid_2">
-              <div class="box">
-                <label for="name">Nom :</label>
-                <input type="text" name="name" id="input-name">
+          <form class="cmxform" id="signupForm" method="post" action="">
+            <div class="container_6">
+              <div class="grid_2">
+                <div class="box">
+                  <label for="input_name">Nom :</label>
+                  <input type="text" name="input_name" id="input_name">
+                </div>
+              </div>
+              <div class="grid_2">
+                <div class="box">
+                  <label for="input_lastname">Prénom :</label>
+                  <input type="text" name="input_lastname" id="input_lastname">
+                </div>
+              </div>
+              <div class="grid_2">
+                <div class="box">
+                  <label for="input_phone">Tél :</label>
+                  <input type="text" name="input_phone" id="input_phone">
+                </div>
               </div>
             </div>
-            <div class="grid_2">
-              <div class="box">
-                <label for="lastname">Prénom :</label>
-                <input type="text" name="lastname" id="input-lastname">
-              </div>
-            </div>
-            <div class="grid_2">
-              <div class="box">
-                <label for="phone">Tél :</label>
-                <input type="text" name="phone" id="input-phone">
-              </div>
-            </div>
-          </div>
+        </form>
           <div class="container_6">
             <div class="box">
               <ul id="keyboard">
@@ -167,13 +169,13 @@
                       <button onClick="init()">Play Again</button>
                     </div>
                   </div>
-                  <ul class="consolelog">
+                  <!--<ul class="consolelog">
                     <li id="event-elemt" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-lightbulb"></span>"Element" invoked <span class="count">0</span></li>
                     <li id="event-elemt-position" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-lightbulb"></span>"Element" position <span class="count">0</span></li>
                     <li id="event-start" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-play"></span>"start" invoked <span class="count">0</span>x</li>
                     <li id="event-drag" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-arrow-4"></span>"drag" invoked <span class="count">0</span>x</li>
                     <li id="event-stop" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-stop"></span>"stop" invoked <span class="count">0</span>x</li>
-                  </ul>
+                  </ul>-->
                 </div>
               </div>
             </div>
@@ -264,7 +266,7 @@ function init() {
       $elemt_counter = $( "#event-elemt" ),
       counts = [ 0, 0, 0 ];
   for ( var i=0; i<7; i++ ) {
-    $('<div>' + numbers[i] + '</div>').data( 'number', numbers[i] ).attr( 'id', 'card'+numbers[i] ).appendTo( '#cardPile' ).draggable( {
+    $('<div>' + numbers[i] + '</div>').data( 'number', numbers[i] ).attr( 'class', 'card-'+numbers[i] ).attr( 'id', 'card'+numbers[i] ).appendTo( '#cardPile' ).draggable( {
       containment: '#content',
       stack: '#cardPile div',
       cursor: 'move',
@@ -288,7 +290,7 @@ function init() {
   // Create the card slots
   var words = [ 'one', 'two', 'three', 'four', 'five', 'six', 'seven' ];
   for ( var i=1; i<=7; i++ ) {
-    $('<div>' + words[i-1] + '</div>').data( 'number', i ).appendTo( '#cardSlots' ).droppable( {
+    $('<div class="letter-'+i+'">' + words[i-1] + '</div>').data( 'number', i ).appendTo( '#cardSlots' ).droppable( {
       accept: '#cardPile div',
       hoverClass: 'hovered',
       drop: handleCardDrop
