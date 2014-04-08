@@ -14,7 +14,7 @@ var tunisiana = {
 				console.log(msg);
 		}
     },
-	host: 'http://172.16.0.58:8080',
+	host: 'http://localhost:8080',
 	grid : [50 ,50],
 };
 $( function() {
