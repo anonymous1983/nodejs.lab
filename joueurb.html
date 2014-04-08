@@ -151,7 +151,7 @@
 </div>
 <div id="frame-4" class="frame frame-4 bg-tunisiana-s2 header-in-top" data-frame="4">
     <div class="frame-header tk-header">
-      <div class="logo-ooredoo"></div>
+      <!-- <div class="logo-ooredoo"></div> -->
       <div class="logo-tunisiana"></div>
     </div>
     <div class="frame-body tk-body">
@@ -255,10 +255,12 @@
             // Connexion à socket.io
             var socket = io.connect(tunisiana.host);
 
-            // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
-            var pseudo = "Joueur B";
-            socket.emit('nouveau_client_b', pseudo);
-            document.title = pseudo + ' - ' + document.title;
+            function nouveau_client(nom){
+                // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
+                var pseudo = nom;
+                socket.emit('nouveau_client_b', pseudo);
+                document.title = pseudo + ' - ' + document.title;
+            }
 
             // Quand on reçoit un message, on l'insère dans la page
             socket.on('messagea', function(data) {

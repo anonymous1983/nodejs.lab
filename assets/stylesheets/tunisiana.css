@@ -139,7 +139,7 @@ html {
 	height: 130px;
 	width: 28%;
 	overflow: hidden;
-	/*background-image: url(../images/logo-tunisiana-white.svg);*/
+	background-image: url(../images/logo-tunisiana-white.svg);
 	background-repeat: no-repeat;
 	background-position: 100% 0;
 	background-size: auto 100%;
@@ -151,7 +151,7 @@ html {
 	height: 100px;
 	width: 65%;
 	overflow: hidden;
-	/*background-image: url(../images/logo-ooredoo-95.svg);*/
+	background-image: url(../images/logo-ooredoo-95.svg);
 	background-repeat: no-repeat;
 	background-position: 0 0;
 	background-size: auto 100%;
@@ -176,12 +176,13 @@ html {
 	left:0;
 	right:0;
 }
-.frame .tk-body .zone_battle.zone_1{
+.frame .tk-body .zone_battle.z_1{
 	top:170px;
 	bottom:50%;
 	padding:50px 20px;
+    border-bottom: 5px solid #ed1c24;
 }
-.frame .tk-body .zone_battle.zone_2{
+.frame .tk-body .zone_battle.z_2{
 	bottom:170px;
 	top:50%;
 	padding:50px 20px;
@@ -224,8 +225,12 @@ html {
 .frame .slogan{
 	/*width:30%;*/
 	/*For Large*/
-	width:70%;
+	width:100%;
 	margin:0 auto;
+}
+.frame .slogan .text-s1{
+    font-weight: 700;
+    line-height: 130px;
 }
 #keyboard{
 	width:688px;
@@ -647,4 +652,9 @@ html {
   -webkit-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
   box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
   padding: 20px;
+}
+
+
+#zone_chat{
+    display: none !important;
 }

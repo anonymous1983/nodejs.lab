@@ -70,9 +70,12 @@ $( function() {
 	});
  });
 validForm = function(){
-    if($('#input_name').val() != '' && $('#input_lastname').val() != '' && $('#input_phone').val() != '')
+    if($('#input_name').val() != '' && $('#input_lastname').val() != '' && $('#input_phone').val() != ''){
+        nouveau_client($('#input_name').val()+' '+$('#input_lastname').val());
         return true;
-    else false;
+    }else{
+        return false;
+    }
 }
 nextFrame = function(){
 	 $('.vegas-background').hide();

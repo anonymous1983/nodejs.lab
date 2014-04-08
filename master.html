@@ -28,8 +28,9 @@
     <li><a href="/background-2.png" data-valign="top"><img src="/thumbnail-2.jpg"></a></li>
     <li><a href="/background-1.png" id="slideshow"><span id="pause"></span><img id="thumbnail" src="/slideshow.gif"></a></li>
   </ul>
+
 </div>
-<div id="frame-2" class="frame frame-2 bg-tunisiana next-frame" data-frame="1">
+<div id="frame-2" class="frame frame-2 next-frame" data-frame="1">
 
   <div class="frame-header tk-header">
       <div class="logo-ooredoo"></div>
@@ -37,8 +38,14 @@
 
     </div>
   <div class="frame-body tk-body">
-    <div class="zone_battle zone_1" id="zone_battle_1"></div>
-    <div class="zone_battle zone_2" id="zone_battle_2"></div>
+    <div class="zone_battle z_1" id="zone_battle_1">
+        <h1 class="name text-s4 color-c1"></h1>
+        <div class="zone_1"></div>
+    </div>
+    <div class="zone_battle z_2" id="zone_battle_2">
+        <h1 class="name text-s4 color-c1"></h1>
+        <div class="zone_2"></div>
+    </div>
   </div>
   <div class="frame-header footer tk-header">
     <div class="logo-ooredoo"></div>
@@ -59,11 +66,9 @@
                 <div class="box">
 
                     <div class="quizResults" style="display: block;">
-                      <h3 class="quizLevel level4"><span><div class="res" style="background-image:url(/images/iconmonstr-christmas-gift-2-icon.svg)"><span class="txt">Bravo ! <b class="client"></b></span> Vous avez gagné une Recharge de <span class="txt">2 DT.</span></div></span></h3>
-
+                      <h3 class="quizLevel level4"><span><div class="res" style="background-image:url(/images/iconmonstr-christmas-gift-2-icon.svg)"><span class="txt">Bravo <b class="client"></b> !</span> Vous avez gagné une Recharge de <span class="txt">3 DT.</span></div></span></h3>
                     </div>
-
-   </div>
+                    </div>
               </div>
             </div>
           </div>
@@ -124,12 +129,15 @@
 			socket.on('nouveau_client_a', function(data) {
                 insereNouveauClient('.zone_1');
                 client_connected_a = 1;
+                $('#zone_battle_1 .name').text(data);
                 fn_client_connected();
 
             });
 			socket.on('nouveau_client_b', function(data) {
                 insereNouveauClient('.zone_2');
                 client_connected_b = 1;
+                $('#zone_battle_2 .name').text(data);
+                console.log(data);
                 fn_client_connected();
             });
 
@@ -165,23 +173,22 @@
             }
             function client_win(pseudo, client){
                 $('.client').text(pseudo);
-                nextFrame(2);
+                nextFrame(2,3);
             }
             function fn_client_connected(){
                 client_connected++;
                 if(client_connected_a == 1 && client_connected_b == 1){
                     client_connected_a = 0;
                     client_connected_b = 0;
-                    nextFrame();
-                    alert(client_connected_a);
-                    alert(client_connected_a);
+                    nextFrame(1,2);
                 }
             }
-            function nextFrame(nbr){
+            function nextFrame(nbra,nbr){
              $('.vegas-background').hide();
              tunisiana.log('----------------------------------------------------',true);
              tunisiana.log('                    NextFrame                       ',true);
              tunisiana.log('----------------------------------------------------',true);
+             currentFrame = nbra;
              $('#frame-'+currentFrame).css('z-index','90').fadeOut('slow', function(){
                  $(this).hide();
              });
@@ -192,7 +199,7 @@
              });
          };
          $('.quizResults').click(function(){
-            nextFrame(1);
+                location.reload();
          });
 
 
