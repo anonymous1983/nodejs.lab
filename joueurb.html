@@ -49,7 +49,7 @@
     <div class="logo-tunisiana"></div>
   </div>
 </div>
-<div id="frame-3" class="frame frame-3 bg-tunisiana-s2" data-frame="3">
+<div id="frame-3" class="frame frame-3 bg-tunisiana-s2 header-in-top" data-frame="3">
   <div class="frame-header tk-header">
     <div class="logo-ooredoo"></div>
     <div class="logo-tunisiana"></div>
@@ -147,6 +147,41 @@
     </div>
   </div>
 </div>
+<div id="frame-4" class="frame frame-4 bg-tunisiana-s2 header-in-top" data-frame="4">
+    <div class="frame-header tk-header">
+      <div class="logo-ooredoo"></div>
+      <div class="logo-tunisiana"></div>
+    </div>
+    <div class="frame-body tk-body">
+      <div class="table_wrap allheight">
+        <div class="cell_wrap middle">
+          <div class="container">
+            <div class="container_6">
+              <div class="grid_6">
+                <div class="box">
+                  <div id="content">
+                    <div id="cardPile"> </div>
+                    <div id="cardSlots"> </div>
+                    <div id="successMessage">
+                      <h2>You did it!</h2>
+                      <button onClick="init()">Play Again</button>
+                    </div>
+                  </div>
+                  <ul class="consolelog">
+                    <li id="event-elemt" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-lightbulb"></span>"Element" invoked <span class="count">0</span></li>
+                    <li id="event-elemt-position" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-lightbulb"></span>"Element" position <span class="count">0</span></li>
+                    <li id="event-start" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-play"></span>"start" invoked <span class="count">0</span>x</li>
+                    <li id="event-drag" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-arrow-4"></span>"drag" invoked <span class="count">0</span>x</li>
+                    <li id="event-stop" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-stop"></span>"stop" invoked <span class="count">0</span>x</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <form action="/" method="post" id="formulaire_chat">
   <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
   <input type="submit" id="envoi_message" value="Envoyer" />
@@ -167,17 +202,12 @@
 <script type="text/javascript" src="/javascripts/tunisiana/background.js"></script> 
 <script type="text/javascript" src="/javascripts/script.js"></script> 
 <script>
-
-
-
-
-
             // Connexion à socket.io
             var socket = io.connect('http://localhost:8080');
 
             // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
             var pseudo = "Joueur B";
-            socket.emit('nouveau_client', pseudo);
+            socket.emit('nouveau_client_b', pseudo);
             document.title = pseudo + ' - ' + document.title;
 
             // Quand on reçoit un message, on l'insère dans la page
@@ -186,7 +216,7 @@
             })
 
             // Quand un nouveau client se connecte, on affiche l'information
-            socket.on('nouveau_client', function(pseudo) {
+            socket.on('nouveau_client_a', function(pseudo) {
                 $('#zone_chat').prepend('<p><em>' + pseudo + ' a rejoint le Chat !</em></p>');
             })
 
@@ -204,6 +234,122 @@
                 $('#zone_chat').prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
             }
         </script>
+        <script>
+        
+ var correctCards = 0;
+$( init );
+ 
+function init() {
+ 
+  // Hide the success message
+  $('#successMessage').hide();
+  $('#successMessage').css( {
+    left: '580px',
+    top: '250px',
+    width: 0,
+    height: 0
+  } );
+ 
+  // Reset the game
+  correctCards = 0;
+  $('#cardPile').html( '' );
+  $('#cardSlots').html( '' );
+ 
+  // Create the pile of shuffled cards
+  var numbers = [ 1, 2, 3, 4, 5, 6, 7 ];
+  numbers.sort( function() { return Math.random() - .5 } );
+    var $start_counter = $( "#event-start" ),
+      $drag_counter = $( "#event-drag" ),
+      $stop_counter = $( "#event-stop" ),
+      $elemt_counter = $( "#event-elemt" ),
+      counts = [ 0, 0, 0 ];
+  for ( var i=0; i<7; i++ ) {
+    $('<div>' + numbers[i] + '</div>').data( 'number', numbers[i] ).attr( 'id', 'card'+numbers[i] ).appendTo( '#cardPile' ).draggable( {
+      containment: '#content',
+      stack: '#cardPile div',
+      cursor: 'move',
+      revert: true,
+      start: function() {
+        $this = $(this);
+        updateLog( $elemt_counter, $this );
+      },
+      drag: function() {
+        counts[ 1 ]++;
+        updateLogPos($(this));
+      },
+      stop: function() {
+        counts[ 2 ]++;
+        updateLogPos($(this));
+      }
+    } );
+  }
+ 
+  // Create the card slots
+  var words = [ 'one', 'two', 'three', 'four', 'five', 'six', 'seven' ];
+  for ( var i=1; i<=7; i++ ) {
+    $('<div>' + words[i-1] + '</div>').data( 'number', i ).appendTo( '#cardSlots' ).droppable( {
+      accept: '#cardPile div',
+      hoverClass: 'hovered',
+      drop: handleCardDrop
+    } );
+  }
+ 
+}
+function updateCounterStatus( $event_counter, new_count ) {
+      // first update the status visually...
+      if ( !$event_counter.hasClass( "ui-state-hover" ) ) {
+        $event_counter.addClass( "ui-state-hover" )
+          .siblings().removeClass( "ui-state-hover" );
+      }
+      // ...then update the numbers
+      $( "span.count", $event_counter ).text( new_count );
+    }
+    
+    function updateLog($event_counter, $this){
+      $( "span.count", $event_counter ).text( $this.attr('id'));
+      
+      
+    }
+    function updateLogPos( $this){
+    var position = $this.position();
+    $("#event-elemt-position").text( "left: " + position.left +  ", top: "  + position.top );
+	socket.emit('update_pos_b', $('#content').html()); // Transmet le message aux autres
+    }
+    
+function handleCardDrop( event, ui ) {
+  var slotNumber = $(this).data( 'number' );
+  var cardNumber = ui.draggable.data( 'number' );
+ 
+  // If the card was dropped to the correct slot,
+  // change the card colour, position it directly
+  // on top of the slot, and prevent it being dragged
+  // again
+ 
+  if ( (slotNumber == cardNumber)||(slotNumber != cardNumber) ) {
+    ui.draggable.addClass( 'correct' );
+    ui.draggable.draggable( 'disable' );
+    $(this).droppable( 'disable' );
+    ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+    ui.draggable.draggable( 'option', 'revert', false );
+    correctCards++;
+  } 
+   
+  // If all the cards have been placed correctly then display a message
+  // and reset the cards for another go
+ 
+  if ( correctCards == 10 ) {
+    $('#successMessage').show();
+    $('#successMessage').animate( {
+      left: '380px',
+      top: '200px',
+      width: '400px',
+      height: '100px',
+      opacity: 1
+    } );
+  }
+ 
+}
+</script>
         
 </body>
 </html>

@@ -35,6 +35,16 @@ io.sockets.on('connection', function (socket, pseudo) {
         socket.set('pseudo', pseudo);
         socket.broadcast.emit('nouveau_client', pseudo);
     });
+	socket.on('nouveau_client_a', function(pseudo) {
+        pseudo = ent.encode(pseudo);
+        socket.set('pseudo', pseudo);
+        socket.broadcast.emit('nouveau_client_a', pseudo);
+    });
+	socket.on('nouveau_client_b', function(pseudo) {
+        pseudo = ent.encode(pseudo);
+        socket.set('pseudo', pseudo);
+        socket.broadcast.emit('nouveau_client_b', pseudo);
+    });
 
     // Dès qu'on reçoit un message, on récupère le pseudo de son auteur et on le transmet aux autres personnes
     socket.on('message', function (message) {
@@ -55,6 +65,22 @@ io.sockets.on('connection', function (socket, pseudo) {
             socket.broadcast.emit('message_b', {pseudo: pseudo, message: message});
         });
     });
+	
+	socket.on('update_pos_a', function (html) {
+        socket.get('pseudo', function (error, pseudo) {
+            //html = ent.encode(html);
+            socket.broadcast.emit('update_pos_a', {pseudo: pseudo, html: html});
+        });
+    });
+	socket.on('update_pos_b', function (html) {
+        socket.get('pseudo', function (error, pseudo) {
+            //html = ent.encode(html);
+            socket.broadcast.emit('update_pos_b', {pseudo: pseudo, html: html});
+        });
+    });
+	
+	
+	
 });
 
 server.listen(8080);

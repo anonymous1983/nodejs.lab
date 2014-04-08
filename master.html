@@ -79,11 +79,6 @@
 <script type="text/javascript" src="/javascripts/tunisiana/background.js"></script> 
 
 <script>
-
-
-
-
-
             // Connexion à socket.io
             var socket = io.connect('http://localhost:8080');
 
@@ -91,6 +86,14 @@
 /*            var pseudo = prompt('Quel est votre pseudo ?');
             socket.emit('nouveau_client', pseudo);
             document.title = pseudo + ' - ' + document.title;*/
+			
+			
+			socket.on('nouveau_client_a', function(data) {
+                insereNouveauClient('.zone_1')
+            });
+			socket.on('nouveau_client_b', function(data) {
+                insereNouveauClient('.zone_2')
+            });
 
             // Quand on reçoit un message, on l'insère dans la page
             socket.on('message_a', function(data) {
@@ -100,10 +103,25 @@
                 insereMessage(data.pseudo, data.message, '.zone_2')
             });
 
+			// Quand on reçoit un message, on l'insère dans la page
+            socket.on('update_pos_a', function(data) {
+                insereHtml(data.pseudo, data.html, '.zone_1')
+            });
+			socket.on('update_pos_b', function(data) {
+                insereHtml(data.pseudo, data.html, '.zone_2')
+            });
+			
             // Ajoute un message dans la page
-            function insereMessage(pseudo, message, zone) {
+            function insereNouveauClient(zone) {
+                $(zone).html('');
+            }
+			function insereMessage(pseudo, message, zone) {
                 $(zone).prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
             }
+			function insereHtml(pseudo, html, zone) {
+                $(zone).html(html);
+            }
+			
         </script>
         
 </body>
