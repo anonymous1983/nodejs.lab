@@ -36,7 +36,7 @@ $( function() {
 				hideQuizHeader: true
             }
 	);
-	$('#slickQuiz .quizResults').click(function() {
+	$('.quizResults').click(function() {
     	      location.reload();
 	});
 
