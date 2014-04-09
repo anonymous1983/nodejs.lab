@@ -49,8 +49,8 @@ html {
 .bg-tunisiana.bg-slogan{
 	background: #e20b2f url(../images/face-.jpg) 50% 100%; /* Old browsers */
 	/*background-size:100% auto;*/
-	/*For Large*/
-	background-size:100% auto;
+	/*For Large
+	background-size:100% auto;*/
 }
 #tk-content,
 #tk-content .frame {
