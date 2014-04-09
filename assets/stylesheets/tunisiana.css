@@ -53,6 +53,16 @@ html {
 	/*For Large*/
 	background-size:100% auto;
 }
+@media only screen 
+and (orientation : landscape) {
+	.bg-tunisiana.bg-slogan{
+		background: #e20b2f url(../images/face-.jpg) 50% 100%; /* Old browsers */
+		background-repeat:no-repeat;
+		/*background-size:100% auto;*/
+		/*For Large*/
+		background-size:auto 100%;
+	}
+}
 #tk-content,
 #tk-content .frame {
 	position:absolute;
