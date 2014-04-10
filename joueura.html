@@ -18,7 +18,7 @@
 <script src="/plugins/respond/respond.js"></script>
 </head>
 
-<body class="tunisiana bg-tunisiana-s2">
+<body class="tunisiana bg-tunisiana-s2 joueur-a">
 <div id="tk-content" class="tk-content">
   <div id="frame-1" class="frame frame-1 next-frame" data-frame="1">
     <ul id="menu-vegaz">
@@ -284,12 +284,21 @@
             // Quand on reçoit un message, on l'insère dans la page
             socket.on('message_a', function(data) {
                 insereMessage(data.pseudo, data.message)
-            })
+            });
 
             // Quand un nouveau client se connecte, on affiche l'information
             socket.on('nouveau_client_b', function(pseudo) {
-                $('#zone_chat').prepend('<p><em>' + pseudo + ' a rejoint le Chat !</em></p>');
-            })
+                //$('#zone_chat').prepend('<p><em>' + pseudo + ' a rejoint le Chat !</em></p>');
+				return true;
+            });
+			
+			socket.on('client_a_lose', function(data) {
+					$('.vegas-background').hide();
+					$('#frame-5').css('z-index','90').fadeOut('slow', function(){
+						$(this).hide();
+					});
+					$('#frame-7').css('z-index','10').fadeIn('slow');
+            });
 
             // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
             $('#formulaire_chat').submit(function () {
@@ -302,7 +311,8 @@
 
             // Ajoute un message dans la page
             function insereMessage(pseudo, message) {
-                $('#zone_chat').prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
+                //$('#zone_chat').prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
+				return true;
             }
 
         </script> 
@@ -412,7 +422,7 @@ function handleCardDrop( event, ui ) {
 
   if ( correctCards == 7 ) {
         nextFrame();
-        socket.emit('client_b_win'); // Transmet le message aux autres
+        socket.emit('client_a_win'); // Transmet le message aux autres
   }
 
 }

@@ -4,6 +4,16 @@ var express = require('express'),
     io = require('socket.io').listen(server),
     ent = require('ent'), // Permet de bloquer les caractères HTML (sécurité équivalente à htmlentities en PHP)
     fs = require('fs');
+	
+	var mysql = require('mysql');
+	
+	var connection = mysql.createConnection({
+	  host     : 'localhost',
+	  user     : 'root',
+	  password : ''
+	});
+	
+	connection.query('USE tunisiana');
 
 
 app.configure(function(){
@@ -20,7 +30,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/master.html', function (req, res) {
-  res.sendfile(__dirname + '/master.html');
+	res.sendfile(__dirname + '/master.html');  
 });
 app.get('/joueura.html', function (req, res) {
   res.sendfile(__dirname + '/joueura.html');
@@ -84,15 +94,36 @@ io.sockets.on('connection', function (socket, pseudo) {
     socket.on('client_a_win', function () {
         socket.get('pseudo', function (error, pseudo) {
             //html = ent.encode(html);
-            socket.broadcast.emit('client_win', {pseudo: pseudo, client: 'a'});
+			var  list_cadeaux='';
+			connection.query('SELECT description FROM  `cadeaux` WHERE DATE =  "'+printDate()+'" AND cnt !=0 ORDER BY RAND() LIMIT 1', function(err, rows){
+				list_cadeaux = rows;
+				connection.query('UPDATE  cadeaux AS C SET  C.cnt =  (C.cnt - 1) WHERE  DATE =  "'+printDate()+'" AND description = "'+list_cadeaux[0].description+'"');
+				console.log(printDate());
+				console.log('---------------');
+				console.log(list_cadeaux[0].description);
+				socket.broadcast.emit('client_win', {pseudo: pseudo, client: 'a', cadeau : list_cadeaux[0].description});
+			  });
         });
+		socket.broadcast.emit('client_b_lose');
+		
     });
 
 
     socket.on('client_b_win', function () {
         socket.get('pseudo', function (error, pseudo) {
             //html = ent.encode(html);
-            socket.broadcast.emit('client_win', {pseudo: pseudo, client: 'b'});
+			var  list_cadeaux='';
+			connection.query('SELECT description FROM  `cadeaux` WHERE DATE =  "'+printDate()+'" AND cnt !=0 ORDER BY RAND() LIMIT 1', function(err, rows){
+				list_cadeaux = rows;
+				connection.query('UPDATE  cadeaux AS C SET  C.cnt =  (C.cnt - 1) WHERE  DATE =  "'+printDate()+'" AND description = "'+list_cadeaux[0].description+'"');
+				console.log(printDate());
+				console.log('---------------');
+				console.log(list_cadeaux[0].description);
+				socket.broadcast.emit('client_win', {pseudo: pseudo, client: 'b', cadeau : list_cadeaux[0].description});
+			  });
+			  
+			  socket.broadcast.emit('client_a_lose');
+            
         });
     });
 
@@ -103,3 +134,15 @@ io.sockets.on('connection', function (socket, pseudo) {
 });
 
 server.listen(8080);
+
+function printDate() {
+    var temp = new Date();
+    var dateStr = padStr(temp.getFullYear()) +'-'+
+                  padStr(1 + temp.getMonth()) +'-'+
+                  padStr(temp.getDate());
+    return dateStr;
+}
+
+function padStr(i) {
+    return (i < 10) ? "0" + i : "" + i;
+}

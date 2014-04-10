@@ -69,7 +69,7 @@
                 <div class="box">
 
                     <div class="quizResults" style="display: block;">
-                      <h3 class="quizLevel level4"><span><div class="res" style="background-image:url(/images/iconmonstr-christmas-gift-2-icon.svg)"><span class="txt">Bravo <b class="client"></b> !</span> Vous avez gagné une Recharge de <span class="txt">3 DT.</span></div></span></h3>
+                      <h3 class="quizLevel level4"><span><div class="res" style="background-image:url(/images/iconmonstr-christmas-gift-2-icon.svg)"><span class="txt">Bravo <b class="client"></b> !</span> Vous avez gagné une Recharge de <span class="txt cadeau">3 DT.</span></div></span></h3>
                     </div>
                     </div>
               </div>
@@ -110,6 +110,7 @@
 			});*/
             // Connexion à socket.io
             var socket = io.connect(tunisiana.host);
+			
 
             // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
 /*            var pseudo = prompt('Quel est votre pseudo ?');
@@ -119,7 +120,8 @@
             client_connected_a = 0,
             client_connected_b = 0,
             currentFrame = 1;
-
+			
+			
 
 			socket.on('nouveau_client_a', function(data) {
                 insereNouveauClient('.zone_1');
@@ -147,14 +149,14 @@
 
 			// Quand on reçoit un message, on l'insère dans la page
             socket.on('update_pos_a', function(data) {
-                insereHtml(data.pseudo, data.html, '.zone_1')
+                insereHtml(data.pseudo, data.html, '.zone_1');
             });
 			socket.on('update_pos_b', function(data) {
-                insereHtml(data.pseudo, data.html, '.zone_2')
+                insereHtml(data.pseudo, data.html, '.zone_2');
             });
 
             socket.on('client_win', function(data) {
-                client_win(data.pseudo, data.client)
+                client_win(data.pseudo, data.client, data.cadeau)
             });
 
             // Ajoute un message dans la page
@@ -167,8 +169,9 @@
 			function insereHtml(pseudo, html, zone) {
                 $(zone).html(html);
             }
-            function client_win(pseudo, client){
-                $('.client').text(pseudo);
+            function client_win(pseudo, client, cadeau){
+                $('.quizLevel .client').text(pseudo);
+				$('.quizLevel .txt.cadeau').text(cadeau);
                 nextFrame(2,3);
             }
             function fn_client_connected(){
