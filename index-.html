@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+
+<title>www.tunisiana.com |</title>
+<meta name="viewport" content="initial-scale=1.0" />
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/common/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="assets/img/common/favicon.ico" />
+<link href="assets/stylesheets/reset.css" rel="stylesheet" type="text/css" media="all" />
+<link href="assets/stylesheets/layout.css" rel="stylesheet" type="text/css" media="all" />
+<link href="assets/stylesheets/font.css" rel="stylesheet" type="text/css" media="all" />
+<link href="assets/stylesheets/sprites.css" rel="stylesheet" type="text/css" media="all" />
+<link href="assets/stylesheets/form.css" rel="stylesheet" type="text/css" media="all" />
+<link href="assets/stylesheets/global.css" rel="stylesheet" type="text/css" media="all" />
+<link href="assets/plugins/vegas/jquery.vegas.css" rel="stylesheet" type="text/css" media="all" />
+<link href="assets/plugins/keyboard/css/keyboard.css" rel="stylesheet" type="text/css" media="all" />
+<link href="assets/plugins/slick-quiz/css/slickQuiz.css" media="screen" rel="stylesheet" type="text/css">
+<link href="assets/stylesheets/tunisiana.css" rel="stylesheet" type="text/css" media="all" />
+<link href="assets/stylesheets/style.css" rel="stylesheet" type="text/css" media="all" />
+<script src="assets/plugins/modernizr/modernizr.custom.js"></script>
+<script src="assets/plugins/respond/respond.js"></script>
+</head>
+ 
+    <body>
+        <h1>Communication avec socket.io !</h1>
+
+        <p><input type="button" value="Embêter le serveur" id="poke" /></p>
+
+
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+
+        <script>
+            var socket = io.connect('http://localhost:8080');
+            socket.on('message', function(message) {
+                alert('Le serveur a un message pour vous : ' + message);
+            })
+
+            $('#poke').click(function () {
+                socket.emit('message', 'Salut serveur, ça va ?');
+            })
+        </script>
+        
+    </body>
+</html>

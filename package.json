@@ -1,0 +1,12 @@
+{
+    "name": "super-chat",
+    "version": "0.1.0",
+    "dependencies": {
+        "express": "~3.3.4",
+        "socket.io": "~0.9.16",
+        "ent": "~0.1.0",
+		"nodemon": "~1.0.17"
+    },
+    "author": "2A <anab.tn@email.com>",
+    "description": "Un super Chat temps réel avec socket.io"
+}
